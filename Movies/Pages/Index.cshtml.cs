@@ -32,40 +32,39 @@ namespace Movies.Pages
         /// <summary>
         /// The minimum IMDB Rating
         /// </summary>
+        [BindProperty]
         public double? IMDBMin { get; set; }
         
         /// <summary>
         /// The maximum IMDB Rating
         /// </summary>
+        [BindProperty]
         public double? IMDBMax { get; set; }
 
         /// <summary>
         /// The minimum Rotten Tomatoes Rating
         /// </summary>
+        [BindProperty]
         public double? RottenMin { get; set; }
 
         /// <summary>
         /// The maximum Rotten Tomatoes Rating
         /// </summary>
+        [BindProperty]
         public double? RottenMax { get; set; }
 
-        public void OnGet(double? IMDBMin, double? IMDBMax, double? RottenMin, double? RottenMax)
+        public void OnGet()
         {
-            this.RottenMin = RottenMin;
-            this.RottenMax = RottenMax;
-            this.IMDBMin = IMDBMin;
-            this.IMDBMax = IMDBMax;
-            
-            SearchTerms = Request.Query["SearchTerms"];
-            MPAARatings = Request.Query["MPAARatings"];
-            Genres = Request.Query["Genres"];
+            Movies = MovieDatabase.All;
+        }
 
+        public void OnPost()
+        {
             Movies = MovieDatabase.Search(SearchTerms);
             Movies = MovieDatabase.FilterByMPAARating(Movies, MPAARatings);
             Movies = MovieDatabase.FilterByGenre(Movies, Genres);
             Movies = MovieDatabase.FilterByIMDBRating(Movies, IMDBMin, IMDBMax);
             Movies = MovieDatabase.FilterByRottenTomatoesRating(Movies, RottenMin, RottenMax);
-            
         }
     }
 }
