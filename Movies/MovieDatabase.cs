@@ -99,7 +99,7 @@ namespace Movies
             List<Movie> results = new List<Movie>();
             foreach (Movie movie in movies)
             {
-                if (movie.MPAARating != null && genres.Contains(movie.MajorGenre))
+                if (movie.MajorGenre != null && genres.Contains(movie.MajorGenre))
                 {
                     results.Add(movie);
                 }
